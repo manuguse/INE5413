@@ -22,7 +22,7 @@ class Graph:
     
     def peso(self, u, v): # O(1)
         return self.matriz_adjacencia[u][v]
-    
+
     def ler(self, arquivo):
         with open(arquivo, 'r') as file:
             for line in file:
@@ -34,6 +34,7 @@ class Graph:
                         self.matriz_adjacencia.append([float('inf')] * n)  
                 elif line.startswith('*edges'):
                     for line in file:
-                        u, v, w = map(int, line.split())
+                        u, v, w = map(float, line.split())
+                        u, v = int(u), int(v)
                         self.matriz_adjacencia[u-1][v-1] = w
                         self.matriz_adjacencia[v-1][u-1] = w

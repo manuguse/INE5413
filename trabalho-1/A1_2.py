@@ -7,18 +7,27 @@
 
 
 import sys, utils
+import algoritmos.busca_em_largura as b
 from grafo import Graph
 
 def main():
-    graph = Graph(sys.argv[1])
-    s = int(sys.argv[2]) - 1
-    if (s < 0 or s >= graph.qtdVertices()):
-        return
+
+    try:
+        graph = Graph(sys.argv[1])
+        s = int(sys.argv[2]) - 1
+        if (s < 0 or s >= graph.qtdVertices()):
+            return
+    except:
+        graph = Graph('grafos/fln_pequena.net')
+        s = 0
     
-    dist, _ = utils.busca_em_largura(graph, s)
-    for i in range(max(dist) + 1):
-        print(f'{i}:', end=' ')
-        print(*[v+1 for v in range(graph.qtdVertices()) if dist[v] == i and dist[v] != float('inf')], sep=',')
+    dist, _ = b.busca_em_largura(graph, s)
+    try:
+        for i in range(max(dist) + 1):
+            print(f'{i}:', end=' ')
+            print(*[v+1 for v in range(graph.qtdVertices()) if dist[v] == i and dist[v] != float('inf')], sep=',')
+    except:
+        pass
 
     # expected output:
     # 0: 1
