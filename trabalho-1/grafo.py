@@ -25,16 +25,20 @@ class Graph:
 
     def ler(self, arquivo):
         with open(arquivo, 'r') as file:
-            for line in file:
-                if line.startswith('*vertices'):
-                    n = int(line.split()[1])
-                    for _ in range(n):
-                        vertex = file.readline().split('"')[1]
-                        self.vertices.append(vertex)
-                        self.matriz_adjacencia.append([float('inf')] * n)  
-                elif line.startswith('*edges'):
-                    for line in file:
-                        u, v, w = map(float, line.split())
-                        u, v = int(u), int(v)
-                        self.matriz_adjacencia[u-1][v-1] = w
-                        self.matriz_adjacencia[v-1][u-1] = w
+            lines = file.readlines()
+            vertices = int(lines[0].split()[1])
+            for i in range(vertices):
+                vertex = ' '.join(lines[i + 1].split(' ')[1:])
+                self.vertices.append(vertex)
+                self.matriz_adjacencia.append([float('inf')] * vertices)  
+            
+            for line in lines[vertices + 2:]:
+                if line == '':
+                    continue
+                try:
+                    u, v, w = map(float, line.split())
+                    u, v = int(u), int(v)
+                    self.matriz_adjacencia[u-1][v-1] = w
+                    self.matriz_adjacencia[v-1][u-1] = w
+                except:
+                    pass

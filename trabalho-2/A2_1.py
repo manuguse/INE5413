@@ -14,7 +14,7 @@ def main():
         if (s < 0 or s >= graph.qtdVertices()):
             return
     except:
-        graph = Grafo('grafos/ContemCicloEuleriano.net')
+        graph = Grafo('grafos/dirigido1.net')
         s = 0
     
     cfc = Algoritmos().componentes_fortemente_conexas(graph)
