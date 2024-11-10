@@ -7,17 +7,14 @@ import sys
 from algoritmos import Algoritmos
 
 def main():
-    
     try:
         graph = Grafo(sys.argv[1])
     except:
-        graph = Grafo('grafos/dirigido1.net')
-        s = 0
-    
+        graph = Grafo('grafos/dirigido2.net')
+
     cfc = Algoritmos().componentes_fortemente_conexas(graph)
-    for item in cfc:
-        if item != None:
-            print(item)
-    
-if __name__ == '__main__':
-    main()
+    for componente in cfc:
+        print(','.join([str(v + 1) for v in componente]))
+
+
+main() 

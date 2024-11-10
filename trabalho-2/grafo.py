@@ -52,10 +52,17 @@ class Grafo:
     
     def get_arestas(self):
         return self.arestas
+
+    def adiciona_aresta(self, u, v, w=1):
+        self.arestas.append((u, v, w))
     
     def get_transposto(self):
-        self.arestas = [(v, u, w) for (u, v, w) in self.arestas]
-            
+        grafo_transposto = Grafo()
+        grafo_transposto.vertices = self.vertices
+        for u, v, w in self.arestas:
+            grafo_transposto.adiciona_aresta(v, u, w)  # Adiciona aresta invertida
+        return grafo_transposto
+
     def qtdVertices(self): # O(1)
         return len(self.vertices)
 
