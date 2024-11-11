@@ -1,9 +1,9 @@
 from grafo import Grafo
 
-class Algoritmos:
-    def __init__(self):
-        pass
-
+class ComponentesFortementeConexas:
+    def __init__(self, graph):
+        self.cfc = ComponentesFortementeConexas(graph)
+    
     def componentes_fortemente_conexas(self, graph: Grafo):
         qtd_vertices = graph.qtdVertices() # quantidade de vértices
         _, _, _, f = self.dfs(graph)       # executa a DFS e salva em f o tempo de término de cada vértice
@@ -63,55 +63,6 @@ class Algoritmos:
         
         return c, t, a, f # retorna as listas de visitados, tempo de descoberta, predecessores e tempo de término
     
-    def ordenacao_topologica(self, graph: Grafo):
-        qtd = graph.qtdVertices() # quantidade de vértices
-        visitados = [False] * qtd # cria uma lista de visitados
-        pilha = [] # cria uma pilha
-        
-        for u in range(qtd): # para cada vértice u
-            if not visitados[u]: # se u não foi visitado
-                self._dfs_topologico(graph, u, visitados, pilha) # executa a DFS topológica em u
-                
-        return [graph.get_vertices()[v] for v in reversed(pilha)] # retorna a ordem topológica em ordem reversa
-    
-    def _dfs_topologico(self, graph: Grafo, u, visitados, pilha):
-        visitados[u] = True # marca u como visitado
-        
-        for v in graph.vizinhos(u): # para cada vizinho v de u
-            if not visitados[v]: # se v não foi visitado
-                self._dfs_topologico(graph, v, visitados, pilha) # executa a DFS topológica em v
-                
-        pilha.append(u) # adiciona u na pilha
-
-    def arvore_geradora_minima(self, graph: Grafo):
-        arestas_ordenadas = sorted(graph.get_arestas(), key=lambda x: x[2]) # ordena as arestas pelo peso
-        pai = list(range(graph.qtdVertices())) # cria uma lista de pais
-        rank = [0] * graph.qtdVertices() # cria uma lista de rank
-
-        def find(u):
-            if pai[u] != u: # se u não é o pai de u 
-                pai[u] = find(pai[u]) # atualiza o pai de u
-            return pai[u] # retorna o pai de u
-
-        def union(u, v):
-            raiz_u = find(u) # encontra a raiz de u
-            raiz_v = find(v) # encontra a raiz de v
-            if raiz_u != raiz_v: # se as raízes são diferentes
-                if rank[raiz_u] > rank[raiz_v]: # se a raiz de u tem rank maior que a raiz de v
-                    pai[raiz_v] = raiz_u  # atualiza o pai de v para u
-                elif rank[raiz_u] < rank[raiz_v]: # se a raiz de u tem rank menor que a raiz de v
-                    pai[raiz_u] = raiz_v # atualiza o pai de u para v
-                else:
-                    pai[raiz_v] = raiz_u # atualiza o pai de v para u
-                    rank[raiz_u] += 1 # incrementa o rank de u
-
-        peso_total = 0 # inicializa o peso total
-        arestas_mst = [] # inicializa a lista de arestas da árvore geradora mínima
-
-        for u, v, peso in arestas_ordenadas: # para cada aresta (u, v, peso) ordenada
-            if find(u) != find(v): # se u e v não estão na mesma componente
-                union(u, v) # une u e v
-                peso_total += peso # incrementa o peso total
-                arestas_mst.append((u, v)) # adiciona a aresta na árvore geradora mínima
-
-        return peso_total, arestas_mst # retorna o peso total e a lista de arestas da árvore geradora mínima
+    def __str__(self) -> str:
+        for componente in self.cfc:
+            print(','.join([str(v + 1) for v in componente]))

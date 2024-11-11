@@ -15,5 +15,4 @@ def main():
     ot = Algoritmos().ordenacao_topologica(graph)
     print(" → ".join(ot), end='')
 
-
 main() 

@@ -16,5 +16,4 @@ def main():
     for componente in cfc:
         print(','.join([str(v + 1) for v in componente]))
 
-
 main() 

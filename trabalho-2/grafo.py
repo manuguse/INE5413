@@ -42,7 +42,9 @@ class Grafo:
             direcionado = lines[v + 1].strip() == "*arcs"
             
             for i in range(v + 2, len(lines)):
-                u, v, w = map(int, lines[i].split())
+                u, v, w = map(float, lines[i].split())
+                u = int(u)
+                v = int(v)
                 arestas.append((u, v, w))
                 
         self.preenche_from_existente((vertices, arestas, direcionado))
